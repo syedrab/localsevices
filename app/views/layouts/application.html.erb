@@ -8,6 +8,21 @@
 </head>
 <body>
 
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? %>
+        <li><a href="#">Edit Profile</a></li>
+      <% else %>
+        <li><a href="#">Sign In</a></li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+ 
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, id: "flash_#{name}" %>
+<% end %>
 <%= yield %>
 
 </body>
