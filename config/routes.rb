@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :reviews
+
+  resources :transactions
+
   resources :service_areas
 
   resources :services
