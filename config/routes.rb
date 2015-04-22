@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :service_areas
+
   resources :services
 
   resources :service_types
