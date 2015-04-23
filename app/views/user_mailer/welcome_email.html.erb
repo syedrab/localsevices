@@ -1,0 +1,10 @@
+# app/views/user_mailer/welcome_email.html.erb
+<h1>Welcome to Local Services</h1>
+
+<p>
+  Hey there <%= @user.email %>, here are the list of services we provide!
+</p>
+
+<% @service_types.each do |service_type| %>
+  <h2><%= service_type.name %></h2>
+<% end %>
