@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 
+gem 'sucker_punch', '~> 1.0'
+gem 'paperclip'
+
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

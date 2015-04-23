@@ -5,7 +5,7 @@ class WelcomeEmailsController < ApplicationController
   def create
     @users = current_user
 
-    UserMailer.welcome_email(@users).deliver_now
+    UserMailer.welcome_email(@users).deliver_later
 
     flash[:notice] = "Welcome Email Sent!"
 

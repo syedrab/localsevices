@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422023406) do
+ActiveRecord::Schema.define(version: 20150423002625) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -28,8 +28,12 @@ ActiveRecord::Schema.define(version: 20150422023406) do
     t.string   "country"
     t.string   "image_url"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "reviews", force: :cascade do |t|
