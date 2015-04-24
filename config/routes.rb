@@ -2,11 +2,7 @@ Rails.application.routes.draw do
 
   resource :welcome_email, only: [:show, :create]
 
-  devise_for :users, controllers: { 
-    sessions: "users/sessions" 
-  }
-  
-  
+  devise_for :users
 
   resources :reviews
 
