@@ -1,0 +1,19 @@
+<div class="container">
+	<h1>Dashboard</h1>
+	<div id="company">
+
+	<%= if @user.company_id
+  		render @user.company 
+  	else
+  		render 'companies/add', company: Company.new(user_id: @user.id)
+  	end %>
+	
+	<div id="newService">
+	<%= if @user.company_id && Service.where(:company_id => @user.company_id).count==0
+		render 'services/add', service: Service.new()
+	else
+		 render @user.company.services
+	end %>
+		
+  	</div>
+</div>

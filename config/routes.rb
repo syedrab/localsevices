@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'search' => 'search#index'
+
+  get 'home/index'
+
   resource :welcome_email, only: [:show, :create]
 
   devise_for :users
@@ -17,6 +21,10 @@ Rails.application.routes.draw do
   resources :service_types
 
   resources :companies
+
+  resources :dashboard
+
+  root to: "home#index"
 
   #resources :users
   #resources :admin, :controller => 'users'

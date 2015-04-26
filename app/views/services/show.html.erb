@@ -1,5 +1,20 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>Name:</strong>
+  <%= @service.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @service.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  $<%= @service.price %>
+</p>
+
+
 <% if can? :update, @service %>
 	<%= link_to 'Edit', edit_service_path(@service) %> |
 <% end %>

@@ -20,6 +20,7 @@
       company = Company.find(service.company_id)
 
       %>
+      <% if can? :update, service %>
       <tr>
         <td><%= service.name %></td>
         <td><%= service.description %></td>
@@ -27,11 +28,10 @@
         <td><%= company.name %></td>
         <td><%= service_type.name %></td>
         <td><%= link_to 'Show', service %></td>
-        <% if can? :update, service %>
-          <td><%= link_to 'Edit', edit_service_path(service) %></td>
-          <td><%= link_to 'Destroy', service, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= link_to 'Edit', edit_service_path(service) %></td>
+        <td><%= link_to 'Destroy', service, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

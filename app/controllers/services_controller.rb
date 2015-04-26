@@ -15,12 +15,12 @@ class ServicesController < ApplicationController
   # GET /services/new
   def new
     @service = Service.new
-    @service_area = ServiceArea.uniq.pluck(:city)
+    @service_area = ServiceArea.where(:company_id => current_user.company_id).group(:city)
   end
 
   # GET /services/1/edit
   def edit
-    @service_area = ServiceArea.where(:service_id => @service.id)
+    @service_area = ServiceArea.where(:service_id => @service.id).group(:city)
   end
 
   # POST /services
@@ -29,14 +29,14 @@ class ServicesController < ApplicationController
     @service = Service.new(service_params)
     @service.company_id = current_user.company_id
     respond_to do |format|
-      params[:service_area].split(',').each do |s_a|
-        @service_area = ServiceArea.new
-        @service_area.city = s_a
-        @service_area.service_id = @service.id
-        @service_area.company_id = @service.company_id
-        @service_area.save
-      end
       if @service.save
+        params[:service_area].split(',').each do |s_a|
+          @service_area = ServiceArea.new
+          @service_area.city = s_a
+          @service_area.service_id = @service.id
+          @service_area.company_id = @service.company_id
+          @service_area.save
+        end
         format.html { redirect_to @service, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
       else
