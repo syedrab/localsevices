@@ -28,7 +28,31 @@
     <%= f.collection_select :service_type_id, ServiceType.all, :id, :name %>
   </div>
 
+  <div class="field">
+    <textarea name="service_area" id="service_area"></textarea>
+  </div>
+
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<script>
+  $(function(){
+    $('form').bind("keypress", function(e) {
+      if (e.keyCode == 13) {               
+        e.preventDefault();
+        return false;
+      }
+    });
+    $('#service_area').tagEditor({ 
+      initialTags: [<% @service_area.each do |s_a| %>
+        '<%= s_a.city %>',
+      <% end %>],
+      autocomplete: { 'source': '/url/', minLength: 3 } 
+    });
+  });
+  
+</script>

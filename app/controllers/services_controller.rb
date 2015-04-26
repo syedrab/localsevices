@@ -15,10 +15,12 @@ class ServicesController < ApplicationController
   # GET /services/new
   def new
     @service = Service.new
+    @service_area = ServiceArea.uniq.pluck(:city)
   end
 
   # GET /services/1/edit
   def edit
+    @service_area = ServiceArea.where(:service_id => @service.id)
   end
 
   # POST /services
@@ -26,8 +28,14 @@ class ServicesController < ApplicationController
   def create
     @service = Service.new(service_params)
     @service.company_id = current_user.company_id
-
     respond_to do |format|
+      params[:service_area].split(',').each do |s_a|
+        @service_area = ServiceArea.new
+        @service_area.city = s_a
+        @service_area.service_id = @service.id
+        @service_area.company_id = @service.company_id
+        @service_area.save
+      end
       if @service.save
         format.html { redirect_to @service, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
@@ -43,6 +51,17 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
+        ServiceArea.destroy_all(service_id: @service.id)
+        params[:service_area].split(',').each do |s_a|
+          @service_area = ServiceArea.where(:city => s_a, :service_id => @service.id, :company_id => @service.company_id)
+          if @service_area.count==0
+            @service_area = ServiceArea.new
+            @service_area.city = s_a
+            @service_area.service_id = @service.id
+            @service_area.company_id = @service.company_id
+            @service_area.save
+          end
+        end
         format.html { redirect_to @service, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
       else
