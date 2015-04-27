@@ -1,7 +1,11 @@
 class SearchController < ApplicationController
-  def index
-  	#raise "#{params[:q]}"
-    @services = Service.find(:all, :conditions => ['description LIKE ?', "hour"])
-	render text: @services.to_json
-  end
+	def index
+		
+
+		#service_area = ServiceArea.where(:city=> params["service_area"].downcase)
+		@services = Service.where(:service_type_id => params["service_type"])
+		
+    	
+		
+  	end
 end

@@ -1,9 +1,11 @@
 <h1>Show Search Results</h1>
 <table>
-	<% @services.each |s| %>
+	<% @services.each do |s| %>
 	<tr>
-		<td><%= tutorial.name %></td>
-		<td><%= tutorial.description %></td>
+		<td><%= s.name %></td>
+		<td><%= s.description %></td>
+		<td>$<%= s.price %></td>
+		<td><%= link_to 'Buy', new_transaction_path(:service => s) %></td>
 	</tr>
 	<% end %>
 </table>

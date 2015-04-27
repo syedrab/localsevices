@@ -9,10 +9,12 @@
   	end %>
 	
 	<div id="newService">
-	<%= if @user.company_id && Service.where(:company_id => @user.company_id).count==0
-		render 'services/add', service: Service.new()
-	else
-		 render @user.company.services
+	<%= if @user.company_id
+		if Service.where(:company_id => @user.company_id).count==0
+			render 'services/add', service: Service.new()
+		else
+			 render @user.company.services
+		end 
 	end %>
 		
   	</div>

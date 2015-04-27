@@ -33,7 +33,7 @@ class CompaniesController < ApplicationController
         user = current_user
         user.company_id = @company.id
         user.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
+        format.html { redirect_to dashboard_index_path, notice: 'Company was successfully created.' }
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        format.html { redirect_to dashboard_index_path, notice: 'Company was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit }

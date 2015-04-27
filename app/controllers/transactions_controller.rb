@@ -15,6 +15,9 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    @transaction.service_id = params[:service]
+    @service = Service.find(params[:service])
+    @company = Company.find(@service.company_id)
   end
 
   # GET /transactions/1/edit

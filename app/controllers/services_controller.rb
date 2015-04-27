@@ -37,7 +37,7 @@ class ServicesController < ApplicationController
           @service_area.company_id = @service.company_id
           @service_area.save
         end
-        format.html { redirect_to @service, notice: 'Service was successfully created.' }
+        format.html { redirect_to dashboard_index_path, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new }
@@ -62,7 +62,7 @@ class ServicesController < ApplicationController
             @service_area.save
           end
         end
-        format.html { redirect_to @service, notice: 'Service was successfully updated.' }
+        format.html { redirect_to dashboard_index_path, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit }
