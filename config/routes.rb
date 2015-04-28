@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :user_profiles
+
   get 'search' => 'search#index'
 
   get 'home/index'

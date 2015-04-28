@@ -7,7 +7,8 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
         can :manage, :all
-    elsif user.role.id = Role.where(name: 'Seller')
+    elsif user.role_id == Role.where(name: 'Seller').first.id
+        
         can :manage, Company, :id => user.company_id
         can :manage, Service, :company_id => user.company_id
         can :read, Company

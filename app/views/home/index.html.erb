@@ -1,21 +1,23 @@
-<h1>Home#index</h1>
+<div class="container">
+<h1>Home Page</h1>
 <%= form_tag("/search", method: "get") do %>
   <div class="field">
-    <input name="service_area"  type="text" id="service_area">
+    <input name="service_area" placeholder="Enter city or town" type="text" id="service_area">
     <select name="service_type" id="service_type">
+        <option disabled selected>Please Select a service</option>
     	<% @service_types.each do |s_t| %>
         <option value="<%=s_t.id%>"><%=s_t.name%></option>
         <% end %>
     </service>
 
   </div>
-
-  <%= submit_tag("Search") %>
+  <div class="field">
+    <%= submit_tag("Search") %>
+  </div>
 <% end %>
 
-
+</div>
 <br/><br/><br/><br/>
-<div id='changeme'>Hello</div>
 <script>
   $(function(){
 	$( "#service_area" ).autocomplete({

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424003525) do
+ActiveRecord::Schema.define(version: 20150427030108) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -84,6 +84,22 @@ ActiveRecord::Schema.define(version: 20150424003525) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_profiles", force: :cascade do |t|
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "middlename"
+    t.string   "phone"
+    t.text     "address1"
+    t.text     "address2"
+    t.string   "city"
+    t.string   "province"
+    t.string   "postal_code"
+    t.string   "country"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.datetime "created_at",                          null: false
@@ -100,11 +116,13 @@ ActiveRecord::Schema.define(version: 20150424003525) do
     t.string   "last_sign_in_ip"
     t.integer  "company_id"
     t.boolean  "admin"
+    t.integer  "user_profile_id"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["role_id"], name: "index_users_on_role_id"
+  add_index "users", ["user_profile_id"], name: "index_users_on_user_profile_id"
 
 end

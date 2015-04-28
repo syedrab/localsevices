@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /transactions
   # GET /transactions.json
@@ -14,10 +15,12 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/new
   def new
-    @transaction = Transaction.new
-    @transaction.service_id = params[:service]
-    @service = Service.find(params[:service])
-    @company = Company.find(@service.company_id)
+      @transaction = Transaction.new
+      @transaction.service_id = params[:service]
+      @transaction.user_id = current_user
+      @service = Service.find(params[:service])
+      @company = Company.find(@service.company_id)
+      @userProfile = UserProfile.find_by(user_id:current_user.id) || UserProfile.new(user_id: current_user.id)
   end
 
   # GET /transactions/1/edit
@@ -27,8 +30,16 @@ class TransactionsController < ApplicationController
   # POST /transactions
   # POST /transactions.json
   def create
+    
     @transaction = Transaction.new(transaction_params)
-
+    @userProfile = UserProfile.find_by(user_id:current_user.id) || UserProfile.new(user_id: current_user.id)
+    if @userProfile.id
+      @userProfile.update_attributes(user_profile_params)
+    else
+      @userProfile = UserProfile.new(user_profile_params)
+      @userProfile.save
+    end
+  
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
@@ -71,6 +82,11 @@ class TransactionsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def user_profile_params
+      params.require(:user_profile).permit(:firstname, :lastname, :middlename, :phone, :address1, :address2, :city, :province, :postal_code, :country)
+      #params[:transaction]
+    end
+
     def transaction_params
       params[:transaction]
     end

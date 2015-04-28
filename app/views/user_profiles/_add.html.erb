@@ -1,0 +1,58 @@
+<%= fields_for(user_profile)  do |f| %>
+  <% if user_profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user_profile.errors.count, "error") %> prohibited this user_profile from being saved:</h2>
+
+      <ul>
+      <% user_profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+  	<span class="required">*</span>
+    <%= f.label 'First name' %><br>
+    <%= f.text_field :firstname %>
+  </div>
+  <div class="field">
+    <%= f.label 'Middle name' %><br>
+    <%= f.text_field :middlename %>
+  </div>
+  <div class="field">
+  	<span class="required">*</span>
+    <%= f.label 'Last name'%><br>
+    <%= f.text_field :lastname %>
+  </div>
+  <div class="field">
+	<span class="required">*</span>
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone %>
+  </div>
+  <h3>Billing Address</h3>
+  <div class="field">
+    <%= f.label 'Street Address Line 1' %><br>
+    <%= f.text_field :address1 %>
+  </div>
+  <div class="field">
+    <%= f.label 'Street Address Line 2' %><br>
+    <%= f.text_field :address2 %>
+  </div>
+  <div class="field">
+    <%= f.label 'City or Town' %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :province %><br>
+    <%= f.text_field :province %>
+  </div>
+  <div class="field">
+    <%= f.label :postal_code %><br>
+    <%= f.text_field :postal_code %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br>
+    <%= f.text_field :country %>
+  </div>
+<% end %>
