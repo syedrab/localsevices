@@ -2,13 +2,8 @@
 <h1>Home Page</h1>
 <%= form_tag("/search", method: "get") do %>
   <div class="field">
-    <input name="service_area" placeholder="Enter city or town" type="text" id="service_area">
-    <select name="service_type" id="service_type">
-        <option disabled selected>Please Select a service</option>
-    	<% @service_types.each do |s_t| %>
-        <option value="<%=s_t.id%>"><%=s_t.name%></option>
-        <% end %>
-    </service>
+      <input name="service_type" placeholder="What are you looking for?" type="text" class="service_type" id="service_type">
+      <input name="service_area" placeholder="Enter your location" type="text" class="service_area" id="service_area">
 
   </div>
   <div class="field">
@@ -18,16 +13,4 @@
 
 </div>
 <br/><br/><br/><br/>
-<script>
-  $(function(){
-	$( "#service_area" ).autocomplete({
-      source: [<% @service_areas.each do |a_s| %>
-        capitalizeFirstLetter('<%= a_s.city %>'),
-      <% end %>],
-    });
 
-    function capitalizeFirstLetter(string) {
-    	return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-  });
-</script>
