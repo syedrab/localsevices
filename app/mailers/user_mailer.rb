@@ -6,6 +6,6 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi #{user.email}"
     @service_types = ServiceType.all
 
-    mail to: 'syed.rab@gmail.com', subject: "You so awesome!"
+    mail to: 'admin@locals.com', subject: "You so awesome!"
   end
 end

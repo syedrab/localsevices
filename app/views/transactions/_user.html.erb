@@ -1,0 +1,35 @@
+<% transaction.each do |t| %>
+	<% c = Company.find(t.company_id) %>
+	<% s = Service.find(t.service_id) %>
+	<% u = UserProfile.find_by(user_id: t.user_id) %>
+	<div class="row company-service-row">
+		<div class="col-md-2">
+			<span><%= c.name %></span>
+		</div>
+		<div class="col-md-2">
+			<span><%= s.name %></span>
+		</div>
+		<div class="col-md-3">
+			<span><%= truncate(s.description, length:100) %></span>
+		</div>
+		<div class="col-md-2">
+			<span><%= t.created_at.strftime("%B %d, %Y") %></span>
+		</div>
+		<div class="col-md-1">
+			<span>$<%= s.price %></span>
+		</div>
+		<div class="col-md-1 " id="review-button-<%= t.id %>">
+		<% r = Review.where(:transaction_id => t.id)
+		if !r.any? %>
+			<a href="#" onclick="$('.review-row').hide(); $('#review-<%=t.id%>').toggle()">Rate</a>
+		<% else %>
+			<span>Already Rated!</span>
+		<% end %>
+		</div>
+	</div>
+	<% if !r.any? %>
+		<div id="review-<%=t.id%>" class="row company-service-row review-row" style="display:none">
+			<%= render 'reviews/form', review: Review.new(user_id: t.user_id, company_id: t.company_id, transaction_id: t.id) %>
+		</div>
+	<% end %>
+<% end %>

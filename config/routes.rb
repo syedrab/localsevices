@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
+  get 'my_account/index'
+
   resource :welcome_email, only: [:show, :create]
 
   devise_for :users

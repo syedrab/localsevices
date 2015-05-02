@@ -6,110 +6,153 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<style>
-  .logo{
-    font-family: Groupon;
-    content: '\e073';
-    color: #82b548 !important;
-    line-height: 66px;
-    background-image: none;
-    font-size: 47px;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .service-type-search{
-    font-size: 1.076923076923077em;
-    height:36px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    margin-top:7px;
-    width: 225px;
-    padding-left:30px;
-    border:0px;
-    
-  }
-  .service-type-search:focus {
-    outline: 0;
-  }
-  .active-search-type{
-    background: #ececec;
-    box-shadow: -2px 1px 3px #999 inset;
-  }
-  .service-area-search{
-    font-size: 1.076923076923077em;
-    height:36px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    margin-top:7px;
-    width: 225px;
-    padding-left:30px;
-    border:0px;
-  }
-  .service-area-search:focus {
-    outline: 0;
-  }
-  .active-search-area{
-    background: #ececec;
-    box-shadow: 2px 1px 3px #999 inset; 
-  }
-</style>
-<body>
-<nav class="navbar navbar-inverse" role="navigation" style="margin-bottom:0px">
+<!--<body style="background: url('/assets/bg-toronto.png') no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; background-size: cover;"> -->
+
+<body class="" itemscope="" itemtype="http://schema.org/WebPage">
+
+    <div class="swipes--wrapper" id="container">
+
+      <header class="site--header" role="banner" itemscope="" itemtype="http://schema.org/WPHeader">
+
+        <div class="container-fluid">
+
+          <a href="/" class="site-logo" itemscope="" itemtype="http://schema.org/Organization">
+            <img src="http://oktow.com/wp-content/uploads/2014/10/KeepItLocalOK_Logo_web.png">
+          </a>
+
+
+          <div class="header-collapse">
+                  <div class="vertical_align"><span id="close-navigation" class="close-menu visible-xs visible-sm"></span>
+                    <nav role="navigation" itemscope="" class="header-menu" style="width: 85%;">
+                      <ul id="menu-top-menu" class="">
+                        <li style="margin-top: -7px; color:#222;">
+                            <%= form_tag("/search", method: "get", id: "searchForms")  do %>
+                              <input name="service_types" class="service-search service-types-search active-search-types" placeholder="What are you looking for?" type="text" class="service_types" id="service_types">
+                              <input name="service_types_id" type="hidden" id="service_types_id">
+                              <input name="service_areas" class="service-search service-areas-search" placeholder="Enter your location" type="text" class="service_areas" id="service_areas">
+                            <% end %>
+                        </li>
+                        <% if user_signed_in? %>
+                          <% if current_user.role_id == 2 %>
+                            <li><%= link_to "Dashboard", dashboard_index_path, :method => :get %></li>
+                          <% end %>
+                          <li class="navbar-right"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+                          <li class="navbar-right"><%= link_to "Edit Profile", edit_user_registration_path, :method => :get %></li>
+                          <li class="navbar-right"><%= link_to "Transactions", my_account_index_path, :method => :get %></li>
+                        <% else %>
+                          <li class="navbar-right"><%= link_to "Sign up", new_user_registration_path, :method => :get %></li>
+                          <li class="navbar-right"><p class="navbar-text">|</p></li>
+                          <li class="navbar-right"><%= link_to "Sign in", new_user_session_path, :method => :get %></li>
+                        <% end %>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+
+        </div>
+
+      </header>
+      <section class="site--main">    
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
+        <% end %>
+        <%= yield %>
+      </section><!-- site main -->
+  </div>
+
+ <!-- end of site. what a ride! -->
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+ Served from: swipesapp.com @ 2015-05-02 00:00:46 by W3 Total Cache --></body>
+
+  <!--<header class="intro-header" >
+        <nav class="navbar navbar-inverse" role="navigation" style="margin-bottom:0px">
   <div class="container container-fluid">
+    <%= form_tag("/search", method: "get", id: "searchForms")  do %>
     <ul class="nav navbar-nav navbar-left">
-      <li><%= link_to "LOCALS", home_index_path, :method => :get, class: "logo" %></li>
+      <li><%= link_to "locals", home_index_path, :method => :get, class: "logo" %></li>
       <li>
-          <input name="service_type" class="service-type-search active-search-type" placeholder="What are you looking for?" type="text" class="service_type" id="service_type">
+          <input name="service_types" class="service-search service-types-search active-search-types" placeholder="What are you looking for?" type="text" class="service_types" id="service_types">
+          <input name="service_types_id" type="hidden" id="service_types_id">
       </li>
-      <li><input name="service_area" class="service-area-search" placeholder="Enter your location" type="text" class="service_area" id="service_area"></li>
+      <li><input name="service_areas" class="service-search service-areas-search" placeholder="Enter your location" type="text" class="service_areas" id="service_areas"></li>
     </ul>
+    <% end %>
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
         <% if current_user.role_id == 2 %>
           <li><%= link_to "Dashboard", dashboard_index_path, :method => :get %></li>
         <% end %>
-        <li><%= link_to "Edit Profile", edit_user_registration_path, :method => :get %></li>
-        <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+
+        <li role="presentation" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            My Account <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>hi</li>
+            <li><%= link_to "Transactions", my_account_index_path, :method => :get %></li>
+            <li><%= link_to "Edit Profile", edit_user_registration_path, :method => :get %></li>
+            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+          </ul>
+        </li>
       <% else %>
         <li><%= link_to "Sign up", new_user_registration_path, :method => :get %></li>
+        <li><p class="navbar-text">|</p></li>
         <li><%= link_to "Sign in", new_user_session_path, :method => :get %></li>
       <% end %>
-      
     </ul>
   </div>
 </nav>
+
+    </header> -->
+
  
-<% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, id: "flash_#{name}" %>
-<% end %>
-<%= yield %>
 
 </body>
 
 <script>
   $(function(){
-    $( ".service_area" ).autocomplete({
-      source: [<% @service_areas.each do |s_a| %>
+    $( "#service_areas" ).autocomplete({
+      source: [<% $service_areas.each do |s_a| %>
         capitalizeFirstLetter('<%= s_a.city %>'),
-      <% end %>],
+      <% end %>]
     });
+    $('#service_areas').val("Toronto");
+    
 
-    $( ".service_type" ).autocomplete({
-      source: [<% @service_types.each do |s_t| %>
-        capitalizeFirstLetter('<%= s_t.name %>'),
+    $( "#service_types" ).autocomplete({
+      source: [<% $service_types.each do |s_t| %>
+      { value: '<%= s_t.id %>' , label: capitalizeFirstLetter('<%= s_t.name %>')},
       <% end %>],
+      select: function(event, ui) {
+          // prevent autocomplete from updating the textbox
+          event.preventDefault();
+
+          // manually update the textbox and hidden field
+          $(this).val(ui.item.label);
+          $("#service_types_id").val(ui.item.value);
+          $("#searchForms").submit(); 
+        }
     });
+    
 
     function capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    $('#service_type').click(function() {
-      $('#service_type').addClass("active-search-type");
-      $('#service_area').removeClass("active-search-area");
+    $('#service_types').click(function() {
+      $('#service_types').addClass("active-search-types");
+      $('#service_areas').removeClass("active-search-areas");
     });
-    $('#service_area').click(function() {
-      $('#service_area').addClass("active-search-area");
-      $('#service_type').removeClass("active-search-type");
+    $('#service_areas').click(function() {
+      $('#service_areas').val('');
+      $('#service_areas').addClass("active-search-areas");
+      $('#service_types').removeClass("active-search-types");
+    });
+
+    $('#service_areas').focusout(function() {
+      if($('#service_areas').val()=='')
+        $('#service_areas').val('Toronto');
     });
   });
 </script>

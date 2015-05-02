@@ -1,0 +1,7 @@
+<% s = Service.find(transaction.service_id) %>
+<% u = UserProfile.find_by(user_id: transaction.user_id) %>
+<td><%= u.firstname %></td>
+<td><%= u.lastname %></td>
+<td><%= s.name %></td>
+<td>$<%= s.price %></td>
+<td><%= transaction.created_at.strftime("%B %d, %Y") %></td>

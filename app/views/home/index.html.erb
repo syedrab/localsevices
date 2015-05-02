@@ -1,16 +1,64 @@
-<div class="container">
-<h1>Home Page</h1>
-<%= form_tag("/search", method: "get") do %>
-  <div class="field">
-      <input name="service_type" placeholder="What are you looking for?" type="text" class="service_type" id="service_type">
-      <input name="service_area" placeholder="Enter your location" type="text" class="service_area" id="service_area">
-
-  </div>
-  <div class="field">
-    <%= submit_tag("Search") %>
-  </div>
-<% end %>
-
+<section class="best--startup">
+      <!--  -->
+      <header class="startup-top">
+        <div class="container">
+          <img src="http://envaultcorp.com/images/gps-icon2.png" class="best-img">
+          <div class="content-block">
+            <p class="imp"><small>give back to your </small>community</p>
+          </div>
+          <%= form_tag("/search", method: "get", id: "searchForm") do %>
+          <div style="color:#222;">
+            <input name="service_type" placeholder="What are you looking for?" type="text" class="service-search service-types-search active-search-types" id="service_type">
+            <input name="service_type_id" type="hidden" id="service_type_id">
+            <input name="service_area" placeholder="Enter your location" type="text" class="service-search service-areas-search" id="service_area"> 
+          </div>
+          <% end %>
+        </div>
+      </header>
+    </section>
 </div>
-<br/><br/><br/><br/>
+<script>
+  $(function(){
+    $( "#service_area" ).autocomplete({
+      source: [<% $service_areas.each do |s_a| %>
+        capitalizeFirstLetter('<%= s_a.city %>'),
+      <% end %>]
+    });
+    $('#service_area').val("Toronto");
 
+    $( "#service_type" ).autocomplete({
+      source: [<% $service_types.each do |s_t| %>
+      { value: '<%= s_t.id %>' , label: capitalizeFirstLetter('<%= s_t.name %>')},
+      
+      <% end %>],
+      select: function(event, ui) {
+          // prevent autocomplete from updating the textbox
+          event.preventDefault();
+          // manually update the textbox and hidden field
+          $(this).val(ui.item.label);
+          $("#service_type_id").val(ui.item.value);
+          $("#searchForm").submit(); 
+        }
+    });
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    $('#service_type').click(function() {
+      $('#service_type').addClass("active-search-types");
+      $('#service_area').removeClass("active-search-areas");
+    });
+    $('#service_area').click(function() {
+      $('#service_area').val('');
+      $('#service_area').addClass("active-search-areas");
+      $('#service_type').removeClass("active-search-types");
+    });
+
+    $('#service_area').focusout(function() {
+      if($('#service_area').val()=='')
+        $('#service_area').val('Toronto');
+    });
+
+  });
+</script>

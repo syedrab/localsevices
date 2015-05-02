@@ -1,11 +1,52 @@
-<h1>Show Search Results</h1>
-<table>
-	<% @services.each do |s| %>
-	<tr>
-		<td><%= s.name %></td>
-		<td><%= s.description %></td>
-		<td>$<%= s.price %></td>
-		<td><%= link_to 'Buy', new_transaction_path(:service => s) %></td>
-	</tr>
-	<% end %>
-</table>
+<link rel="stylesheet" type="text/css" media="all" href="http://www.priceline.com/hotel/content/css/list/ht-common.css?v=20150129">
+<link rel="stylesheet" type="text/css" href="http://www.priceline.com/hotel/content/css/list/listitem.css?v=20150319">
+<section class="best--startup">
+	<header class="startup-top" style="background: #0a84c1 !important;">
+		<div class="container " style="background-color: #e5f0ff; text-align:left; color: #333333 !important; padding:1%; border-radius:10px">
+			<div style="height:52px">
+				<ul id="tabs4" class="group" style="padding-left:0px">
+					<li class="left"><a id="navTabRtl" id="list-view" class="selected-list"><span>list view</span></a></li>
+					<li class="left"><a id="navTabRtl" id="map-view" class="selected-list" style="background-position: -180px -52px;"><span style="margin-left:10px; height: auto !important; color: #fff; text-align: center; margin-top: 12px;">Show Map <br/>View</span></a></li>
+			</div>
+			<div class="white-10-onblue1">
+				<div style="padding: 15px; font-size: 14px; font-weight: bold; font-style: normal;"><%=  @services.length %> Services in <%= params["service_areas"] %> for '<%= params["service_types"] %>'</div>
+			<% @services.each do |s| %>
+				<% @company = Company.find(s.company.id) %>
+				<div class="row col-md-12 search-result-box">
+					<div class="col-md-2">
+						<%= image_tag @company.logo.url(:thumb) %>
+					</div>
+					<div class="col-md-8" style="text-align:left">
+						<h3 class="listitem_name listitem_name_carlos" style="margin-top: 0px !important; margin-bottom: 5px; !important"><a title="The Omni King Edward Hotel" class="listitem_name_link" >
+							<%= link_to @company.name, @company %>
+						</a></h3>
+						<span class="listitem_location"><%= @company.city %>, <%= @company.province %> (<%= s.name %>)</span>
+						<div class="listitem_ratings_group">
+							<div class="listitem_stars listitem_stars_<%=@company.rating %>.0">
+								<span class="listitem_stars_desc">4-Star</span>
+							</div>
+						</div>
+						<div>
+							<span class="listitem_location"><%= truncate(s.description, length:100) %></span>
+						</div>
+					</div>
+					<div class="col-md-2 listitem_price_group" style="text-align:center; top: 10px;">		
+						<span class="listitem_price">
+							<a href="/companies/<%= @company.id %>" class="listitem_price_link">	
+							
+								<span class="listitem_price_currency">
+								$</span>
+								<span class="listitem_price_amount">
+									<%= number_with_precision(s.price,  precision: 0) %>
+								</span>
+							</a>
+						</span>					
+						<button id="hotelButton_1804104_PSL" type="button" onclick="window.open('/companies/<%= @company.id %>');void(0);" class="listitem_choose" choosebutton="true" title="Choose room at Fairfield Inn Toronto-Brampton">Choose</button>
+					</div>
+					
+				</div>
+			<% end %>
+			</div>
+		</div>
+	</header>
+</section>

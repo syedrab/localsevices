@@ -9,15 +9,15 @@
   	end %>
 	
 	<div id="newService">
-	<%= if @user.company_id
-		if Service.where(:company_id => @user.company_id).count==0
-			render 'services/add', service: Service.new()
-		else
-			 render @user.company.services
-		end 
-
+	<% if @user.company_id
+		if Service.where(:company_id => @user.company_id).count==0 %>
+			<%= render 'services/add', service: Service.new() %>
+		<% else %>
+			<h1> Services </h1>
+			<div><%= link_to 'New Service', new_service_path %></div>
+			<%= render @user.company.services %>
+		<% end 
 	end %>
-	<%= link_to 'New Service', new_service_path %>
 		
   	</div>
 </div>

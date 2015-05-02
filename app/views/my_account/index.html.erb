@@ -1,0 +1,25 @@
+<div class="container">
+	<h1>My Account</h1>
+
+	<div class="row company-header-row">
+		<div class="col-md-2">
+			<span>Company</span>
+		</div>
+		<div class="col-md-2">
+			<span>Service</span>
+		</div>
+		<div class="col-md-3">
+			<span>Description</span>
+		</div>
+		<div class="col-md-2">
+			<span>Purchase Date</span>
+		</div>
+		<div class="col-md-1">
+			<span>Price</span>
+		</div>
+		<div class="col-md-2">
+			<span>Rate</span>
+		</div>
+	</div>
+	<%= render 'transactions/user', transaction: Transaction.where(user_id: @user.id) %>
+</div>

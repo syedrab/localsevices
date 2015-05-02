@@ -12,6 +12,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
+    @services = Service.where(:company_id => @company.id)
   end
 
   # GET /companies/new

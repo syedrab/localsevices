@@ -11,7 +11,8 @@ class Ability
         
         can :manage, Company, :id => user.company_id
         can :manage, Service, :company_id => user.company_id
-        can :read, Company
+        can :manage, Review, :user_id => user.id
+        can :manage, Transaction, :user_id => user.id
     else
         #can :manage, Review
         can :read, Company

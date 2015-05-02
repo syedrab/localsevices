@@ -1,2 +1,13 @@
 <h2><%= company.name %></h2>
 <p><%= company.description %></p>
+<table>
+	<tr>
+		<th>First Name: </th>
+		<th>Last Name: </th>
+		<th>Service: </th>
+		<th>Price: </th>
+		<th>Date Purchased: </th>
+	<tr>
+	<%= render Transaction.where(company: company.id) %>
+	</tr>
+</table>
