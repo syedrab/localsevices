@@ -18,10 +18,10 @@
 		<div class="col-md-1">
 			<span>$<%= s.price %></span>
 		</div>
-		<div class="col-md-1 " id="review-button-<%= t.id %>">
-		<% r = Review.where(:transaction_id => t.id)
+		<div class="col-md-1 review-<%=t.company_id%>" id="review-button-<%= t.id %>">
+		<% r = Review.where(:company_id => t.company_id, :user_id =>t.user_id)
 		if !r.any? %>
-			<a href="#" onclick="$('.review-row').hide(); $('#review-<%=t.id%>').toggle()">Rate</a>
+			<a href="#"  onclick="$('.review-row').hide(); $('#review-<%=t.id%>').toggle()">Rate</a>
 		<% else %>
 			<span>Already Rated!</span>
 		<% end %>

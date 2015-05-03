@@ -18,7 +18,7 @@
     </section>
 </div>
 <script>
-  $(function(){
+$(function(){
     $( "#service_area" ).autocomplete({
       source: [<% $service_areas.each do |s_a| %>
         capitalizeFirstLetter('<%= s_a.city %>'),

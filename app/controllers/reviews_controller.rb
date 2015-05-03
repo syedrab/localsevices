@@ -27,6 +27,16 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     respond_to do |format|
       if @review.save
+        sum = 0;
+        num_rating = 0;
+        Review.where(:company_id => @review.company_id).each do |r|
+          sum = sum + r.rating
+          num_rating = num_rating + 1
+        end
+        c = Company.find(@review.company_id)
+        c.rating = sum/num_rating
+        c.num_rating = num_rating
+        c.save
         #format.html { redirect_to my_account_index_path, notice: 'Review was successfully created.' }
         format.js { render :create }
         format.json { render :show, status: :created, location: @review }

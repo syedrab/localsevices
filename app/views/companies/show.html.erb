@@ -43,7 +43,7 @@
 	if user_signed_in? 
 		@user = current_user
 		t = Transaction.where(:service_id => s.id, :user_id => @user.id)
-		if t.any? %>
+		if !t.any? %>
 			<span><%= link_to 'Buy', new_transaction_path(:service => s), class: "action-button blue" %></span>
 		<% else %>
 			<span>Already Purchased!</span>

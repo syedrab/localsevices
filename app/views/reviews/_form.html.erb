@@ -12,12 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :rating %><br>
-    <%= f.text_field :rating %>
+    <%= f.label :company_id %>: <%= Company.find(review.company_id).name %>
   </div>
   <div class="field">
-    <%= f.label :comment %><br>
-    <%= f.text_area :comment %>
+    <%= f.label 'Rating (out of 5)' %>:  <%= f.text_field :rating %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %>: <%= f.text_area :comment %>
   </div>
   <input type="hidden" name="review[user_id]" id="review[user_id]" value="<%= review.user_id%>">
   <input type="hidden" name="review[transaction_id]" id="review[transaction_id]" value="<%= review.transaction_id%>">
