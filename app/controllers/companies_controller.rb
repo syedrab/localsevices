@@ -1,6 +1,5 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show]
-  before_action :authenticate_user!
   load_and_authorize_resource
 
   # GET /companies
@@ -12,7 +11,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
-    @services = Service.where(:company_id => @company.id)
+    @services = Service.where(:company_id => @company.id).order(:price)
     @reviews = Review.where(:company_id => @company.id)
   end
 
@@ -30,6 +29,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     @company.user_id = current_user.id
+    @company.num_rating = 0
 
     respond_to do |format|
       if @company.save

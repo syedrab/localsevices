@@ -12,7 +12,7 @@
 		<% @company = Company.find(s.company.id) %>
 		<div class="row col-md-12 search-result-box">
 			<div class="col-md-2">
-				<%= image_tag @company.logo.url(:thumb) %>
+				<%= image_tag @company.image_url, class: "thumb" %>
 			</div>
 			<div class="col-md-8" style="text-align:left">
 				<h3 class="listitem_name listitem_name_carlos" style="margin-top: 0px !important; margin-bottom: 5px; !important"><a title="The Omni King Edward Hotel" class="listitem_name_link" >
@@ -38,15 +38,14 @@
 			<div class="col-md-2 listitem_price_group" style="text-align:center; top: 10px;">		
 				<span class="listitem_price">
 					<a href="/companies/<%= @company.id %>" class="listitem_price_link">	
-					
 						<span class="listitem_price_currency">
 						$</span>
 						<span class="listitem_price_amount">
 							<%= number_with_precision(s.price,  precision: 0) %>
 						</span>
 					</a>
-				</span>					
-				<button id="hotelButton_1804104_PSL" type="button" onclick="window.open('/companies/<%= @company.id %>');void(0);" class="listitem_choose" choosebutton="true" title="Choose room at Fairfield Inn Toronto-Brampton">Choose</button>
+				</span>
+				<button id="hotelButton_1804104_PSL" type="button" onclick="window.location.href ='/companies/<%= @company.id %>'; void(0);" class="listitem_choose" choosebutton="true" title="Choose room at Fairfield Inn Toronto-Brampton">Choose</button>
 			</div>
 			
 		</div>

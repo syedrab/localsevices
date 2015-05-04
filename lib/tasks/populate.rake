@@ -28,9 +28,57 @@ namespace :db do
       :role_id => 1,
       :admin => true)
       
+    # Create test company user accounts and companies
+    10.times do |n|
+      email = "seller-#{n+1}@keepitlocal.com"
+      password = "password"
+      test_user = User.create!(
+        :email => email,
+        :password => password,
+        :password_confirmation => password,
+        :role_id => 2)
+      test_company = Company.create!(
+        :name => Faker::Company.name, 
+        :description => Faker::Lorem.paragraph(sentence_count = 3), 
+        :website => 'www.'+Faker::Company.name+'.com', 
+        :email => email, 
+        :phone => Faker::Number.number(10), 
+        :fax => Faker::Number.number(10), 
+        :address1 => Faker::Address.street_address, 
+        :address2 => Faker::Address.secondary_address, 
+        :city => ['Toronto', 'Pickering', 'Burlington', 'Brampton', 'Mississauga', 'Markham', 'Richmondhill', 'Vaughan', 'Milton', 'Newmarket'].sample, 
+        :province => 'Ontario', 
+        :postal_code => Faker::Address.zip_code, 
+        :country => 'Canada', 
+        :image_url => Faker::Company.logo, 
+        :num_rating => 0,
+        :user_id => test_user.id
+        )
+        test_user.company_id = test_company.id
+        test_user.save
+        5.times do |sample|
+          test_service = Service.create!(
+            :name => Faker::Commerce.product_name, 
+            :description => Faker::Company.catch_phrase, 
+            :price => Faker::Commerce.price,
+            :company_id => test_company.id, 
+            :service_type_id => [*1..10].sample
+          )
+          test_service_area = ServiceArea.create!(
+            :city => 'Toronto', 
+            :service_id => test_service.id,
+            :company_id => test_company.id
+          )
+        end
+    end
+
+    10.times do |n|
+      service_type = ServiceType.create!(:name => Faker::Commerce.department(n+1));
+    end
+
     # Create test user accounts
     10.times do |n|
-      email = "test-#{n+1}@test.org"
+      email = "buyer-#{n+1}@keepitlocal.com"
       password = "password"
       test_user = User.create!(
         :email => email,

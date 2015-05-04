@@ -39,6 +39,7 @@ class TransactionsController < ApplicationController
       @userProfile.update_attributes(user_profile_params)
     else
       @userProfile = UserProfile.new(user_profile_params)
+      @userProfile.user_id = @user.id
       @userProfile.save
     end
     respond_to do |format|

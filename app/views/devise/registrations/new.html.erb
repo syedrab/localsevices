@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" media="all" href="http://www.priceline.com/hotel/content/css/trans/details.css?v=20150315">
+<div id="content" class="container " style="text-align:left; padding:1%;">
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -23,7 +25,7 @@
 
   <div class="field">
     <%= f.label :role %>
-    <%= f.collection_select :role_id, Role.where.not(id: Role.first), :id, :name %>
+    <%= f.collection_select :role_id, Role.where.not(id: Role.first).order(:name), :id, :name %>
   </div>
 
   <div class="actions">
@@ -32,3 +34,4 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>

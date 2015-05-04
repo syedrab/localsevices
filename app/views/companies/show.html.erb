@@ -21,8 +21,10 @@
 			</div>
 			<div id="detailsChooseYourRoom" style="float: right; padding: 0px 0 2px 0;">
 					<div class="detailsPrice">						
-						<% t_s = Service.find_by(:company_id => @company.id) %>
+					<% t_s = Service.find_by(:company_id => @company.id)
+					if t_s %>
 						<span class="detailsPriceAmount"><span class="currencySymbol">$</span><span id="overViewHeaderPrice"><%= t_s.price %></span></span>
+					<% end %>
 					</div>
 					<a id="detailsChooseRoomButton" class="button-primary fright gaHtlEvntTrk" href="#ratesDetails" data-ga-act="navigation" data-ga-lbl="Choose Room-ratesdetails">Select Service</a>
 				<div class="fclear"><!-- Clear --></div>
@@ -30,7 +32,7 @@
 		</div>
 		<div id="detailsSummaryLeft" class="fleft">
 			<div class="detailsLargePhotoContainer fleft">
-				<div id="detailsLargePhoto" style="background-image: url(http://aff.bstatic.com/images/hotel/max500/144/14454940.jpg); background-size: 500px 357px;">
+				<div id="detailsLargePhoto" style="background-image: url(<%= @company.image_url %>); background-size: 500px 357px;">
 				</div>
 			</div>		
 			<div class="clear"><!-- Clear --></div>
@@ -52,7 +54,7 @@
 					</a>
 					<div id="detailsReviewCount">
 						<a href="javascript:detailsSmoothScroll('#detailsReviews');" class="gaHtlEvntTrk" data-ga-act="navigation" data-ga-lbl="guest reviews">
-						<%= @company.num_rating %> user ratings
+						<%= @company.num_rating ? @company.num_rating : '0' %> user ratings
 						</a>
 					</div>
 				</div>
@@ -71,6 +73,7 @@
 				<a href="#detailsReviews" class="gaHtlEvntTrk">See all user reviews</a>
 			</div>
 		</div>
+		<a name="ratesDetails" class="ratesDetailsAnchor"></a>
 		<div id="ratesWrapper">
 			<div id="ratesTableWrapper">
 				<table class="rates-persist-area" cellspacing="0" border="1" style="width: 950px;">
@@ -148,5 +151,20 @@
 		<% end 
 		end %>
 		</div>
+		<a name="map" class="ratesDetailsMapAnchor"></a>
+		<div class="mapHeader">
+			<div class="mapHeaderText"><%= @company.name %></div>
+		</div>
+		<div id="map_canvas" class="map rounded" style="width:100%; padding: 0; text-shadow: none; height:calc(100vh - 200px); position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"></div>
 	</div>
 </div>
+<script>
+$(function(){
+	$('#map_canvas').gmap().bind('init', function(ev, map) {
+		$('#map_canvas').gmap('addMarker', {'position': '43.67023, -79.38676', 'bounds': true, zoom: 3}).click(function() {
+			$('#map_canvas').gmap('openInfoWindow', {'content': 'Company 1'}, this);
+		});
+		$('#map_canvas').gmap('option', 'zoom', 12);
+	});
+});
+</script>

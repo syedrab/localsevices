@@ -61,9 +61,6 @@
 
       </header>
       <section class="site--main">    
-        <% flash.each do |name, msg| %>
-          <%= content_tag :div, msg, id: "flash_#{name}" %>
-        <% end %>
         <section class="best--startup">
           <header class="startup-top">
             <%= yield %>

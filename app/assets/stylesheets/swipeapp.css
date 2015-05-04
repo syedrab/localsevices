@@ -3543,15 +3543,9 @@ fieldset[disabled] .site--header .get-swipes.active {
 .best--startup .startup-top {
   min-height: 700px;
   height: 100%;
-  background: #0a84c1 !important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover; 
-  -o-background-size: cover; 
-  background-size: cover;
-  /*background: #8a94a0 url('../images/backgrounds/bg-homepage-top.jpg') no-repeat center;*/
+  background: #0a84c1;
   padding: 100px 0 0;
   text-align: center;
-  color: #fff;
 }
 .best--startup .startup-top .best-img {
   width: 175px;

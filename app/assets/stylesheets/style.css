@@ -87,3 +87,14 @@
   h2{
       margin: 0 !important;
   }
+  .thumb{
+    width:100px;
+    height: 100px;
+  }
+  .homeHeader{
+    background: #0a84c1 url('/assets/bg-toronto.png')  no-repeat center center fixed !important; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100vw 100vh !important;
+  }

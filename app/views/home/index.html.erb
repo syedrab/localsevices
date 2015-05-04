@@ -13,7 +13,10 @@
 </div>
 <script>
 $(function(){
-    $(".header").background("url('/assets/bg-toronto.png') no-repeat;");
+    $(".startup-top").addClass("homeHeader");
+
+
+      
     $( "#service_area" ).autocomplete({
       source: [<% $service_areas.each do |s_a| %>
         capitalizeFirstLetter('<%= s_a.city %>'),
