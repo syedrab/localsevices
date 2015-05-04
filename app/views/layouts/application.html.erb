@@ -64,7 +64,10 @@
         <% flash.each do |name, msg| %>
           <%= content_tag :div, msg, id: "flash_#{name}" %>
         <% end %>
-        <%= yield %>
+        <section class="best--startup">
+          <header class="startup-top">
+            <%= yield %>
+          </header>
       </section><!-- site main -->
   </div>
 

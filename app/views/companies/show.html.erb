@@ -1,61 +1,152 @@
-<div class="container"><p id="notice"><%= notice %></p>
+<link rel="stylesheet" type="text/css" media="all" href="http://www.priceline.com/hotel/content/css/trans/details.css?v=20150315">
+<link rel="stylesheet" type="text/css" media="all" href="http://www.priceline.com/hotel/content/css/trans/overviewGroupedRates.css?v=20150316">
+<link rel="stylesheet" type="text/css" href="http://www.priceline.com/hotel/content/css/list/listitem.css?v=20150319">
+<div id="content" class="container " style="text-align:left; padding:1%;">
+	<div id="detailsHotelSummary" style="padding:0px">
+		<div id="detailsHotelSummaryHeaderContainer" class="clearfix">
+			<div id="detailsHotelSummaryHeader" style="float: left; width: 70%; padding: 0;">
+				<h1 id="detailsHotelSummaryName" style="font-weight: bold;">
+					<%= @company.name %>
+				</h1>
+				<div style="float:initial" class="listitem_stars listitem_stars_<%= number_with_precision(@company.rating,  precision: 1) %>">
+					<span class="listitem_stars_desc">4-Star</span>
+				</div>
 
-<h1><%= @company.name %></h1>
-
-<div class="row">
-	<div class="col-md-4">
-		<%= image_tag @company.logo.url(:medium) %>
-	</div>
-	<div class="col-md-6">
-		<%= @company.description %><br/>
-		<%= @company.email %><br/>
-		<%= @company.phone %><br/>	
+				<span id="detailsHotelSummaryAddress"><%= @company.address1 %>, <%= @company.city %>, <%= @company.province %></span>&nbsp;&nbsp;
+				<a id="detailsShowMapLink" href="#map" class="gaHtlEvntTrk" data-ga-act="navigation" data-ga-lbl="Map View">
+					<img src="/assets/icon_location.png" title="Map" alt="Map"> See Map
+				</a>
+				<span style="display:block" id="detailsHotelSummaryAddress"><%= @company.phone %></span>
+				
+			</div>
+			<div id="detailsChooseYourRoom" style="float: right; padding: 0px 0 2px 0;">
+					<div class="detailsPrice">						
+						<% t_s = Service.find_by(:company_id => @company.id) %>
+						<span class="detailsPriceAmount"><span class="currencySymbol">$</span><span id="overViewHeaderPrice"><%= t_s.price %></span></span>
+					</div>
+					<a id="detailsChooseRoomButton" class="button-primary fright gaHtlEvntTrk" href="#ratesDetails" data-ga-act="navigation" data-ga-lbl="Choose Room-ratesdetails">Select Service</a>
+				<div class="fclear"><!-- Clear --></div>
+			</div>
+		</div>
+		<div id="detailsSummaryLeft" class="fleft">
+			<div class="detailsLargePhotoContainer fleft">
+				<div id="detailsLargePhoto" style="background-image: url(http://aff.bstatic.com/images/hotel/max500/144/14454940.jpg); background-size: 500px 357px;">
+				</div>
+			</div>		
+			<div class="clear"><!-- Clear --></div>
+		</div>
+		<div id="detailsSummaryRight" class="fleft">
+			<div class="detailsSeparatorThin"><!-- Separator  1--></div>
+			<div id="detailsWhatYoullLove">
+				<h2>About Us</h2>
+			</div>
+			<div id="detailsShortDescription">
+				<p><%= @company.description %></p>
+			</div>
+			<div class="detailsSeparatorThin"><!-- Separator 3--></div>
+			<div id="detailsWhatGuestsAreSaying">
+			<h2>What Guests Are Saying</h2>				
+				<div id="detailsOverallGuestScore">
+					<a href="javascript:detailsSmoothScroll('#detailsReviews');" class="gaHtlEvntTrk" data-ga-act="navigation" data-ga-lbl="guest reviews (clicked rating)">
+						<span id="detailsReviewSummaryScore"><%= number_with_precision(@company.rating,  precision: 1) %> / 5</span>
+					</a>
+					<div id="detailsReviewCount">
+						<a href="javascript:detailsSmoothScroll('#detailsReviews');" class="gaHtlEvntTrk" data-ga-act="navigation" data-ga-lbl="guest reviews">
+						<%= @company.num_rating %> user ratings
+						</a>
+					</div>
+				</div>
+				<div id="detailsGuestQuotes">
+				<% if @reviews.any? 
+						r = @reviews.first%>
+						<div class="detailsQuoteWrapper">
+							<span class="detailsBigQuote"><img src="/assets/quote.png" title="Quote" alt="Quote"></span><span class="detailsQuote"><%= r.comment %></span>
+						</div>
+					<% else %>
+						<div class="detailsQuoteWrapper">
+							<span class="detailsBigQuote"><img src="/assets/quote.png" title="Quote" alt="Quote"></span><span class="detailsQuote">Sorry, this company has not been rated yet!</span>
+						</div>
+						<% end %>
+				</div>
+				<a href="#detailsReviews" class="gaHtlEvntTrk">See all user reviews</a>
+			</div>
+		</div>
+		<div id="ratesWrapper">
+			<div id="ratesTableWrapper">
+				<table class="rates-persist-area" cellspacing="0" border="1" style="width: 950px;">
+					<tbody>
+						<tr class="rates-persist-header">
+							<th class="roomTypeTH">Service Name</th>
+							<th class="rateRoomConditionsTH">Description</th>
+							<th class="rateRoomPriceTH">Price</th>
+							<th class="rateRoomReserveTH">Reserve</th>
+						</tr>
+						<% @services.each do |s| %>
+						<tr>
+							<td>
+								<div class="roomType" style="width: 238px">
+									<div id="2667807_desc" class="rateInfoDesc"><%= s.name %></div>
+								</div>
+							</td>
+							<td>
+								<div class="roomRateTDWrapper">
+									<div class="conditionRatesReserveWrapper" style="padding-bottom: 15px;"><span class="rateRoomConditions rateRoomText" style="width: 387px;"><span class="rateCancelText"><%= s.description %></span></div>
+								</div>
+							</td>
+							<td>
+								<div class="rateRoomPrice roomRatePriceTextSeti IErateRoomPriceAdj" style="width: 152px"><span class="rs_Display_rate_dollars">$<%= s.price %></span></div>
+							</td>
+							<td>
+								<div class="roomRateTDWrapper"><span class="rateRoomReserve module-buttons">
+									<%= link_to 'Buy', new_transaction_path(:service => s), class: "button-primary gaHtlEvntTrk-Rates" %>
+								</span></div>
+							</td>
+						</tr>
+						<tr class="trSeparator"><td colspan="4"><!--- separator --></td></tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="detailsReviews">
+			<a href="#content" class="detailsToTop gaHtlEvntTrk">Back to Top</a>
+			<h2>Guest Score and Reviews</h2>
+			
+			<div id="detailsReviewsTop">
+				<div id="detailsReviewOverallContainer" class="fleft">
+					<b>Overall Quality</b>
+					<div id="detailsReviewOverallScore">
+						<div id="detailsReviewOverallScoreValue"><%= @company.rating %></div>
+						out of 10
+					</div>
+					<div id="detailsReviewOverallScoreArrow"><!-- Arrow --></div>
+					<span>Based on <%= @company.num_rating %><br> user rating<%= @company.num_rating>1? 's': ''%></span>
+				</div>
+				<div class="fclear"><!-- Clear --></div>
+			</div>
+			<div class="detailsSeparatorThin"><!-- Separator  1--></div>
+		<% if @reviews.any?
+			@reviews.each do |r| %>
+			<div id="detailsIndividualReviews">
+				<div class="detailsIndividualReview">
+					<div class="detailsIndividualReviewLeft fleft">
+						<div class="detailsIndividualReviewScoreContainer">
+							<div class="detailsIndividualReviewScore">
+								<%= r.rating %>
+							</div>
+							<div class="detailsIndividualReviewScoreArrow"><!-- Arrow --></div>
+						</div>
+						<%= r.created_at.strftime("%B %d, %Y") %><br>
+					</div>
+					<div class="detailsIndividualReviewRight fleft">
+						<p></p>
+						<p><%= r.comment %></p>
+					</div>
+					<div class="fclear"><!-- Clear --></div>
+				</div>
+			</div>
+		<% end 
+		end %>
+		</div>
 	</div>
 </div>
-
-<div class="row company-header-row">
-	<div class="col-md-2">
-		<span>Service</span>
-	</div>
-	<div class="col-md-6">
-		<span>Description</span>
-	</div>
-	<div class="col-md-2">
-		<span>Price</span>
-	</div>
-	<div class="col-md-2">
-		<span>Reserve</span>
-	</div>
-</div>
-<% @services.each do |s| %>
-<div class="row company-service-row">
-	<div class="col-md-2">
-		<span><%= s.name %> </span>
-	</div>
-	<div class="col-md-6">
-		<span><%= truncate(s.description, length:100) %> </span>
-	</div>
-	<div class="col-md-2">
-		<span>$<%= s.price %> </span>
-	</div>
-	<div class="col-md-2">
-	<% 
-	if user_signed_in? 
-		@user = current_user
-		t = Transaction.where(:service_id => s.id, :user_id => @user.id)
-		if !t.any? %>
-			<span><%= link_to 'Buy', new_transaction_path(:service => s), class: "action-button blue" %></span>
-		<% else %>
-			<span>Already Purchased!</span>
-		<% end
-	end %>
-	</div>
-</div>
-<% end %>
-
-<% if can? :update, @company %>
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<% end %>
-<%= link_to 'Back', companies_path %>
-
-</div>	

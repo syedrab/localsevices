@@ -29,6 +29,7 @@ gem 'paperclip'
 gem 'cancancan', '~> 1.10'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass', '~> 4.3.0'
+gem 'faker', '~> 1.4.3'
 
 
 # Use ActiveModel has_secure_password

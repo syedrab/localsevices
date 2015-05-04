@@ -5,6 +5,7 @@
     font-size: 47px;
     display: inline-block;
     vertical-align: middle;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
   .service-search{
   	font-size: 1.076923076923077em;
@@ -82,4 +83,7 @@
   }
   .left{
     float:left;
+  }
+  h2{
+      margin: 0 !important;
   }

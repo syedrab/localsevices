@@ -635,7 +635,7 @@ address {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 970px;
+    width: 1010px;
   }
 }
 .container-fluid {
@@ -3541,8 +3541,9 @@ fieldset[disabled] .site--header .get-swipes.active {
   filter: alpha(opacity=100);
 }
 .best--startup .startup-top {
-  height: 700px;
-  background: url('/assets/bg-toronto.png') no-repeat;
+  min-height: 700px;
+  height: 100%;
+  background: #0a84c1 !important;
   -webkit-background-size: cover;
   -moz-background-size: cover; 
   -o-background-size: cover; 

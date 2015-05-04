@@ -1,24 +1,19 @@
-<section class="best--startup">
-      <!--  -->
-      <header class="startup-top">
-        <div class="container">
-          <img src="http://envaultcorp.com/images/gps-icon2.png" class="best-img">
-          <div class="content-block">
-            <p class="imp"><small>give back to your </small>community</p>
-          </div>
-          <%= form_tag("/search", method: "get", id: "searchForm") do %>
-          <div style="color:#222;">
-            <input name="service_type" placeholder="What are you looking for?" type="text" class="service-search service-types-search active-search-types" id="service_type">
-            <input name="service_type_id" type="hidden" id="service_type_id">
-            <input name="service_area" placeholder="Enter your location" type="text" class="service-search service-areas-search" id="service_area"> 
-          </div>
-          <% end %>
-        </div>
-      </header>
-    </section>
+<div class="container">
+  <img src="http://envaultcorp.com/images/gps-icon2.png" class="best-img">
+  <div class="content-block">
+    <p class="imp"><small>give back to your </small>community</p>
+  </div>
+  <%= form_tag("/search", method: "get", id: "searchForm") do %>
+  <div style="color:#222;">
+    <input name="service_type" placeholder="What are you looking for?" type="text" class="service-search service-types-search active-search-types" id="service_type">
+    <input name="service_type_id" type="hidden" id="service_type_id">
+    <input name="service_area" placeholder="Enter your location" type="text" class="service-search service-areas-search" id="service_area"> 
+  </div>
+  <% end %>
 </div>
 <script>
 $(function(){
+    $(".header").background("url('/assets/bg-toronto.png') no-repeat;");
     $( "#service_area" ).autocomplete({
       source: [<% $service_areas.each do |s_a| %>
         capitalizeFirstLetter('<%= s_a.city %>'),

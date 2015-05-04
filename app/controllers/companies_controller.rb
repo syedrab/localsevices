@@ -13,6 +13,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1.json
   def show
     @services = Service.where(:company_id => @company.id)
+    @reviews = Review.where(:company_id => @company.id)
   end
 
   # GET /companies/new
